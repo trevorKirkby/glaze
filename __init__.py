@@ -14,6 +14,9 @@
 import bpy
 from . test_operator import test_operator, test_operator2
 from . test_panel import test_panel, test_panel2
+#from . set_material import prop_material_id, operator_set_material, panel_set_material
+from . add_nodes_operator import AddNodeOperator
+from . add_nodes_panel import AddNodePanel
 
 bl_info = {
     "name" : "glaze",
@@ -26,12 +29,14 @@ bl_info = {
     "category" : "Generic"
 }
 
-#def register():
-#    ...
+classes = (test_operator, test_operator2, test_panel, test_panel2, AddNodeOperator, AddNodePanel)
 
-#def unregister():
-#    ...
+def register():
+    for cls in classes:
+        bpy.utils.register_class(cls)
+    #bpy.types.Scene.prop_node_settings = bpy.props.PointerProperty(type=NodeSettings)
 
-classes = (test_operator, test_operator2, test_panel, test_panel2)
-
-register, unregister = bpy.utils.register_classes_factory(classes)
+def unregister():
+    for cls in classes:
+        bpy.utils.unregister_class(cls)
+    #del bpy.types.Scene.prop_node_settings
