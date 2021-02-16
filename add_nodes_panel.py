@@ -29,5 +29,6 @@ class AddNodePanel(bpy.types.Panel):
 
     def draw(self, context):
         layout = self.layout
-        #layout.prop(context.scene.prop_node_settings, "Nodes")
-        layout.operator("node.add_node_operator", text = "Add Node")
+        #layout.prop(context.scene.prop_node_settings, "Nodes") #Does not show up??? Debug in future.
+        layout.operator("node.add_node_operator", text = "Add Textured Node")
+        layout.operator("node.add_iridescent_operator", text = "Add Iridescent Node")

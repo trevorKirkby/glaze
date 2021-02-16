@@ -17,6 +17,7 @@ from . test_panel import test_panel, test_panel2
 #from . set_material import prop_material_id, operator_set_material, panel_set_material
 from . add_nodes_operator import AddNodeOperator
 from . add_nodes_panel import AddNodePanel
+from . iridescent import AddIridescentNodeOperator
 
 bl_info = {
     "name" : "glaze",
@@ -29,7 +30,7 @@ bl_info = {
     "category" : "Generic"
 }
 
-classes = (test_operator, test_operator2, test_panel, test_panel2, AddNodeOperator, AddNodePanel)
+classes = (test_operator, test_operator2, test_panel, test_panel2, AddNodeOperator, AddNodePanel, AddIridescentNodeOperator)
 
 def register():
     for cls in classes:
