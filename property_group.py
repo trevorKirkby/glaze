@@ -25,3 +25,13 @@ class GlazeProperties(bpy.types.PropertyGroup):
         description="choose a node to add",
         items=node_types,
     )
+    material_type : bpy.props.EnumProperty(
+        name="Materials",
+        description="chooas a material to apply",
+        items=[
+            ("EMISSION", "Emission", ""),
+            ("FOG", "Fog", ""),
+            ("SOIL", "Soil", ""),
+            ("METAL", "Metal", ""),
+        ]
+    )

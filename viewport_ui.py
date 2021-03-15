@@ -9,5 +9,5 @@ class ViewportPanel(bpy.types.Panel):
 
     def draw(self, context):
         layout = self.layout
-        row = layout.row()
-        row.operator("view3d.set_material", text = "Set Material")
+        layout.prop(context.scene.glaze_props, "material_type", text="") 
+        layout.operator("view3d.set_material", text = "Set Material")

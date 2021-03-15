@@ -85,11 +85,13 @@ def save_node_group(name, desc, node_group):
             i += 1
         '''
 
+    '''
     for node in node_group.nodes:
         for output in node_group.outputs:
             print(output)
             print(dir(output))
+    '''
 
     with open("nodes/"+name+".yaml", "w") as open_file:
         print(data)
-        yaml.safe_dump(data)
+        yaml.safe_dump(data, open_file)
