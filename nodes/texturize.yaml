@@ -1,0 +1,25 @@
+name: Texturize
+input:
+  loc: [-300,0]
+  inputs:
+    - [Color, Color]
+    - [Float, Scale]
+    - [Float, Intensity]
+nodes:
+  TexNoise0:
+    type: TexNoise
+    loc: [-100, 200]
+  MixRGB0:
+    type: MixRGB
+    loc: [100, 0]
+    blend_type : MULTIPLY
+output:
+  loc: [300,0]
+  outputs:
+    - [Color, Color]
+links:
+  - [input, 0, MixRGB0, 1]
+  - [input, 1, TexNoise0, 2]
+  - [input, 2, MixRGB0, 0]
+  - [TexNoise0, 0, MixRGB0, 2]
+  - [MixRGB0, 0, output, 0]

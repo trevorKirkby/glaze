@@ -1,4 +1,5 @@
 import bpy
+from . node_group import load_node_group
 
 #TODO: Create these nodes globally, so we do not ever need to make multiple instances of the same node group
 def create_iridescent_group(context, operator, group_name):
@@ -65,8 +66,9 @@ class AddIridescentNodeOperator(bpy.types.Operator):
         return context.active_object.active_material is not None
 
     def execute(self, context):
-        node_name = "Iridescence"
-        node_group = create_iridescent_group(self, context, node_name)
+        #node_name = "Iridescence"
+        #node_group = create_iridescent_group(self, context, node_name)
+        node_group = load_node_group("nodes/iridescent.yaml")
         material = context.active_object.active_material
         node = material.node_tree.nodes.new("ShaderNodeGroup")
         node.node_tree = bpy.data.node_groups[node_group.name]
