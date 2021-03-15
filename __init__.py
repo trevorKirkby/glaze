@@ -12,12 +12,15 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 import bpy
-from . test_operator import test_operator, test_operator2
-from . test_panel import test_panel, test_panel2
-#from . set_material import prop_material_id, operator_set_material, panel_set_material
+
+from . property_group import GlazeProperties
+
 from . add_nodes_operator import AddNodeOperator
-from . add_nodes_panel import AddNodePanel
-from . iridescent import AddIridescentNodeOperator
+from . save_nodes_operator import SaveNodeOperator
+from . shading_ui import NodeMenu, ShadingPanel
+
+from . set_materials_operator import SetMaterialOperator
+from . viewport_ui import ViewportPanel
 
 bl_info = {
     "name" : "glaze",
@@ -30,14 +33,14 @@ bl_info = {
     "category" : "Generic"
 }
 
-classes = (test_operator, test_operator2, test_panel, test_panel2, AddNodeOperator, AddNodePanel, AddIridescentNodeOperator)
+classes = (GlazeProperties, AddNodeOperator, SaveNodeOperator, NodeMenu, ShadingPanel, SetMaterialOperator, ViewportPanel)
 
 def register():
-    for cls in classes:
-        bpy.utils.register_class(cls)
-    #bpy.types.Scene.prop_node_settings = bpy.props.PointerProperty(type=NodeSettings)
+    for bpy_class in classes:
+        bpy.utils.register_class(bpy_class)
+    bpy.types.Scene.glaze_props = bpy.props.PointerProperty(type=GlazeProperties)
 
 def unregister():
-    for cls in classes:
-        bpy.utils.unregister_class(cls)
-    #del bpy.types.Scene.prop_node_settings
+    for bpy_class in classes:
+        bpy.utils.unregister_class(bpy_class)
+    del bpy.types.Scene.glaze_props

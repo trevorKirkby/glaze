@@ -1,9 +1,10 @@
 import bpy
 import yaml
+import collections
 
 def load_node_group(source_file):
     with open(source_file, "r") as open_file:
-        data = yaml.full_load(open_file)
+        data = yaml.safe_load(open_file)
 
     group = bpy.data.node_groups.new(data["name"], "ShaderNodeTree")
     nodes = dict()
@@ -36,5 +37,59 @@ def load_node_group(source_file):
 
     return group
 
-def save_node_group(node_group):
-    return
+def save_node_group(name, desc, node_group):
+    data = dict()
+    data["name"] = name
+    data["desc"] = desc
+    data["input"] = dict()
+    data["output"] = dict()
+
+    nodes_table = dict()
+    nodes_counter = collections.Counter()
+    for node in node_group.nodes:
+        if node.type == "GROUP_INPUT":
+            data["input"]["loc"] = list(node.location)
+        elif node.type == "GROUP_OUTPUT":
+            data["output"]["loc"] = list(node.location)
+        else:
+            nodes_table[node.type+str(nodes_counter[node.type[10:]])] = node
+            nodes_counter[node.type] += 1
+
+    data["input"]["inputs"] = []
+    for input in node_group.inputs:
+        data["input"]["inputs"].append([input.name, input.name]) #input.name
+    data["output"]["outputs"] = []
+    for output in node_group.outputs:
+        data["output"]["outputs"].append([output.name, output.name])
+    
+    data["nodes"] = dict()
+    for node in nodes_table:
+        data["nodes"][node] = dict()
+        data["nodes"][node]["loc"] = list(nodes_table[node].location)
+        data["nodes"][node]["type"] = nodes_table[node].name#[10:]
+        '''
+        special_attributes = [attribute for attribute in dir(nodes_table[node]) if attribute not in dir(bpy.types.ShaderNode)] #TODO: Only save special attributes that differ from their default values.
+        for attribute in special_attributes:
+            data["nodes"][node][attribute] = nodes_table[node].__getattribute__(attribute)
+        data["nodes"][node]["defaults"] = []
+        '''
+        '''
+        i = 0
+        for input in nodes_table[node].inputs:
+            if "default_value" not in dir(input): continue #Whatever these are, they don't have default values, and therefore do not concern this part of the program.
+            try:
+                yaml.safe_dump(input.default_value)
+                data["nodes"][node]["defaults"].append([i, input.default_value]) #TODO: Again, only save these if they differ from the stock defaults.
+            except yaml.representer.RepresenterError: #Quick way to identify if value can safely be serialized. Look into a better way to do this in the future.
+                pass
+            i += 1
+        '''
+
+    for node in node_group.nodes:
+        for output in node_group.outputs:
+            print(output)
+            print(dir(output))
+
+    with open("nodes/"+name+".yaml", "w") as open_file:
+        print(data)
+        yaml.safe_dump(data)

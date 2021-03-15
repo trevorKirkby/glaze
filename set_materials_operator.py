@@ -1,18 +1,9 @@
 import bpy
 
-class test_operator(bpy.types.Operator):
-    bl_idname = "view3d.cursor_center"
-    bl_label = "Simple Test Operator"
-    bl_description = "A simple test operator that puts the cursor in the center of the screen"
-
-    def execute(self, context):
-        bpy.ops.view3d.snap_cursor_to_center()
-        return {'FINISHED'}
-
-class test_operator2(bpy.types.Operator):
-    bl_idname = "view3d.material_glowy"
-    bl_label = "Simple Test Operator 2"
-    bl_description = "A simple test operator that sets the material for all selected objects"
+class SetMaterialOperator(bpy.types.Operator):
+    bl_idname = "view3d.set_material"
+    bl_label = "Set Material"
+    bl_description = "set the material for all selected objects"
 
     def execute(self, context):
         for obj in bpy.context.selected_objects:

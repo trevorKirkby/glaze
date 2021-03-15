@@ -1,4 +1,5 @@
 name: Iridescent
+desc: applies iridescent effects to any input texture
 input:
   loc: [0,0]
   inputs:

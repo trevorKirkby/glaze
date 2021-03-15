@@ -1,4 +1,5 @@
 name: Texturize
+desc: multiply input with some noise texture
 input:
   loc: [-300,0]
   inputs:
