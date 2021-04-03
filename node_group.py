@@ -3,16 +3,29 @@ import yaml
 import collections
 
 #TODO:
-#   -Default values for node group inputs/outputs
-#   -Parameters for internal nodes of node groups
+#   -Default values for node group inputs/outputs [DONE]
+#   -Parameters for internal nodes of node groups [DONE]
+#   -Utility to import/export YAML files into glaze library
 #   -Better handling of a bad YAML file that may have been imported or altered
+#   -Node group folders? Ways to organize many node groups
+#   -Make adding the same group twice not create duplicate group definitions
+
+#TODO:
+#   -Serialized preset materials.
+#       -Including keeping track of node locations so editing from the node menu does not look horrible.
+#   -Way to save, export, and import materials as well as node groups
+#   -Modifiable basic material parameters in the viewport menu
+
+#TODO:
+#   -Automatic basic unwrappping button from viewport.
+#       -Barebones: Mark all edges as seams, automatically unwrap, and pack all islands. Maybe with the ability to preserve vertical or horizontal orientation as a setting.
 
 class flowmap(list): pass #A hack to make YAML look nicer, credit to https://stackoverflow.com/questions/14000893/specifying-styles-for-portions-of-a-pyyaml-dump
 def flowmap_rep(dumper, data):
     return dumper.represent_sequence(u"tag:yaml.org,2002:seq", data, flow_style=True)
 yaml.add_representer(flowmap, flowmap_rep)
 
-def locify(pair):
+def serialize(pair):
     return flowmap([int(coord) for coord in list(pair)])
 
 def load_node_group(source_file):
@@ -57,13 +70,15 @@ def save_node_group(name, desc, node_group):
     data["input"] = dict()
     data["output"] = dict()
 
+    temporary_group = bpy.data.node_groups.new("Temporary", "ShaderNodeTree")
+
     nodes_table = dict()
     nodes_counter = collections.Counter()
     for node in node_group.nodes:
         if node.type == "GROUP_INPUT":
-            data["input"]["loc"] = locify(node.location)
+            data["input"]["loc"] = serialize(node.location)
         elif node.type == "GROUP_OUTPUT":
-            data["output"]["loc"] = locify(node.location)
+            data["output"]["loc"] = serialize(node.location)
         else:
             nodes_table[node.bl_idname[10:]+str(nodes_counter[node.bl_idname[10:]])] = node
             nodes_counter[node.bl_idname[10:]] += 1
@@ -77,36 +92,30 @@ def save_node_group(name, desc, node_group):
     
     data["nodes"] = dict()
     for node in nodes_table:
-        #print(dir(nodes_table[node]))
-        #print(nodes_table[node].bl_idname)
         data["nodes"][node] = dict()
         data["nodes"][node]["type"] = nodes_table[node].bl_idname[10:]
-        data["nodes"][node]["loc"] = locify(nodes_table[node].location)
-        '''
-        special_attributes = [attribute for attribute in dir(nodes_table[node]) if attribute not in dir(bpy.types.ShaderNode)] #TODO: Only save special attributes that differ from their default values.
+        data["nodes"][node]["loc"] = serialize(nodes_table[node].location)
+        temporary_node = temporary_group.nodes.new(type=nodes_table[node].bl_idname)
+        special_attributes = [attribute for attribute in dir(nodes_table[node]) if nodes_table[node].__getattribute__(attribute) != temporary_node.__getattribute__(attribute)]
         for attribute in special_attributes:
-            data["nodes"][node][attribute] = nodes_table[node].__getattribute__(attribute)
-        data["nodes"][node]["defaults"] = []
-        '''
-        '''
-        i = 0
+            if attribute == "defaults": pass #Handled more comprehensively later on.
+            try:
+                yaml.safe_dump(nodes_table[node].__getattribute__(attribute))
+                data["nodes"][node][attribute] = nodes_table[node].__getattribute__(attribute)
+            except yaml.representer.RepresenterError: pass
+        i = -1
         for input in nodes_table[node].inputs:
+            i += 1
             if "default_value" not in dir(input): continue #Whatever these are, they don't have default values, and therefore do not concern this part of the program.
+            if temporary_node.inputs[i].default_value == input.default_value: continue #Only need to record defaults that diverge from the regular ones.
             try:
                 yaml.safe_dump(input.default_value)
-                data["nodes"][node]["defaults"].append([i, input.default_value]) #TODO: Again, only save these if they differ from the stock defaults.
-            except yaml.representer.RepresenterError: #Quick way to identify if value can safely be serialized. Look into a better way to do this in the future.
-                pass
-            i += 1
-        '''
+                if "defaults" not in data["nodes"][node].keys(): data["nodes"][node]["defaults"] = []
+                data["nodes"][node]["defaults"].append(serialize([i, input.default_value]))
+            except yaml.representer.RepresenterError: pass #Quick way to identify if value can safely be serialized. Look into a better way to do this in the future.
 
-    '''
-    for node in node_group.nodes:
-        for output in node_group.outputs:
-            print(output)
-            print(dir(output))
-    '''
+    #print(dir(bpy.data.node_groups))
+    bpy.data.node_groups.remove(temporary_group)
 
     with open("nodes/"+name+".yaml", "w") as open_file:
-        #print(data)
         yaml.dump(data, open_file, sort_keys=False)
