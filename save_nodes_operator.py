@@ -19,4 +19,5 @@ class SaveNodeOperator(bpy.types.Operator):
     def execute(self, context):
         material = context.active_object.active_material
         save_node_group(self.group_name, self.group_desc, context.active_node.node_tree)
+        #add (self.group_name.lower(), self.group_name, self.group_desc) to context.scene.glaze_props.node_type
         return {"FINISHED"}

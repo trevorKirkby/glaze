@@ -5,6 +5,7 @@ import collections
 #TODO:
 #   -Default values for node group inputs/outputs [DONE]
 #   -Parameters for internal nodes of node groups [DONE]
+#   -Serialize links correctly                    [DONE]
 #   -Utility to import/export YAML files into glaze library
 #   -Better handling of a bad YAML file that may have been imported or altered
 #   -Node group folders? Ways to organize many node groups
@@ -20,7 +21,10 @@ import collections
 #   -Automatic basic unwrappping button from viewport.
 #       -Barebones: Mark all edges as seams, automatically unwrap, and pack all islands. Maybe with the ability to preserve vertical or horizontal orientation as a setting.
 
-class flowmap(list): pass #A hack to make YAML look nicer, credit to https://stackoverflow.com/questions/14000893/specifying-styles-for-portions-of-a-pyyaml-dump
+#TODO:
+#   -Make some neat node groups and materials preset
+
+class flowmap(list): pass #A hack to make YAML representation more human-friendly, credit to https://stackoverflow.com/questions/14000893/specifying-styles-for-portions-of-a-pyyaml-dump
 def flowmap_rep(dumper, data):
     return dumper.represent_sequence(u"tag:yaml.org,2002:seq", data, flow_style=True)
 yaml.add_representer(flowmap, flowmap_rep)
@@ -73,6 +77,7 @@ def save_node_group(name, desc, node_group):
     temporary_group = bpy.data.node_groups.new("Temporary", "ShaderNodeTree")
 
     nodes_table = dict()
+    input_output_table = dict()
     nodes_counter = collections.Counter()
     for node in node_group.nodes:
         if node.type == "GROUP_INPUT":
@@ -114,8 +119,34 @@ def save_node_group(name, desc, node_group):
                 data["nodes"][node]["defaults"].append(serialize([i, input.default_value]))
             except yaml.representer.RepresenterError: pass #Quick way to identify if value can safely be serialized. Look into a better way to do this in the future.
 
-    #print(dir(bpy.data.node_groups))
+    data["links"] = []
+    for link in node_group.links: #This loop has more repeated code than I would like.
+        entry = []
+        if link.from_node.type == "GROUP_INPUT": entry.append("input")
+        if link.from_node.type == "GROUP_OUTPUT": entry.append("output")
+        for key in nodes_table.keys():
+            if link.from_node == nodes_table[key]:
+                entry.append(key)
+        if len(entry) != 1: raise RuntimeError
+        from_socket = 0
+        for socket in link.from_node.outputs:
+            if socket == link.from_socket: break
+            from_socket += 1
+        entry.append(from_socket)
+        if link.to_node.type == "GROUP_INPUT": entry.append("input")
+        if link.to_node.type == "GROUP_OUTPUT": entry.append("output")
+        for key in nodes_table.keys():
+            if link.to_node == nodes_table[key]:
+                entry.append(key)
+        if len(entry) != 3: raise RuntimeError
+        to_socket = 0
+        for socket in link.to_node.inputs:
+            if socket == link.to_socket: break
+            to_socket += 1
+        entry.append(to_socket)
+        data["links"].append(flowmap(entry))
+
     bpy.data.node_groups.remove(temporary_group)
 
-    with open("nodes/"+name+".yaml", "w") as open_file:
+    with open("nodes/"+name.lower()+".yaml", "w") as open_file:
         yaml.dump(data, open_file, sort_keys=False)
