@@ -15,7 +15,7 @@ import collections
 #   -Serialized preset materials.
 #       -Including keeping track of node locations so editing from the node menu does not look horrible.
 #   -Way to save, export, and import materials as well as node groups
-#   -Modifiable basic material parameters in the viewport menu
+#   -Modifiable basic material parameters in the viewport menu... Include these optional parameters as something in the YAML file?
 
 #TODO:
 #   -Automatic basic unwrappping button from viewport.

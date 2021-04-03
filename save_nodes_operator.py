@@ -1,9 +1,10 @@
 import bpy
+import os
 from . node_group import save_node_group
 
 class SaveNodeOperator(bpy.types.Operator):
     bl_idname = "node.save_node_operator"
-    bl_label = "Save Node Group to Library" #TODO: There also has to be an operator for deleting node groups from a library, and ideally one for loading a YAML file into library, or exporting a library entry as a YAML file you can send to other people.
+    bl_label = "Save Node Group to Library"
     bl_description = "save a custom node group so you can access it in future projects"
 
     group_name = bpy.props.StringProperty(name="Node Group Name", default="")
@@ -19,5 +20,18 @@ class SaveNodeOperator(bpy.types.Operator):
     def execute(self, context):
         material = context.active_object.active_material
         save_node_group(self.group_name, self.group_desc, context.active_node.node_tree)
-        #add (self.group_name.lower(), self.group_name, self.group_desc) to context.scene.glaze_props.node_type
+        #context.scene.glaze_props.node_type.items.append((self.group_name.lower(), self.group_name, self.group_desc)) #IF this doesnt work maybe just make a method to load/reload the property group?
         return {"FINISHED"}
+
+'''
+class DeleteNodeOperator(bpy.types.Operator):
+    bl_idname = "node.delete_node_operator"
+    bl_label = "Delete Node Group from Library"
+    bl_description = "delete a node group from the library"
+
+    def execute(self, context):
+        options = context.scene.glaze_props
+        os.remove("nodes/"+options.node_type.lower())
+        context.scene.glaze_props.node_type.items.remove((self.group_name.lower(), self.group_name, self.group_desc))
+        return {"FINISHED"}
+'''
