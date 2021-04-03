@@ -2,6 +2,19 @@ import bpy
 import yaml
 import collections
 
+#TODO:
+#   -Default values for node group inputs/outputs
+#   -Parameters for internal nodes of node groups
+#   -Better handling of a bad YAML file that may have been imported or altered
+
+class flowmap(list): pass #A hack to make YAML look nicer, credit to https://stackoverflow.com/questions/14000893/specifying-styles-for-portions-of-a-pyyaml-dump
+def flowmap_rep(dumper, data):
+    return dumper.represent_sequence(u"tag:yaml.org,2002:seq", data, flow_style=True)
+yaml.add_representer(flowmap, flowmap_rep)
+
+def locify(pair):
+    return flowmap([int(coord) for coord in list(pair)])
+
 def load_node_group(source_file):
     with open(source_file, "r") as open_file:
         data = yaml.safe_load(open_file)
@@ -48,25 +61,27 @@ def save_node_group(name, desc, node_group):
     nodes_counter = collections.Counter()
     for node in node_group.nodes:
         if node.type == "GROUP_INPUT":
-            data["input"]["loc"] = list(node.location)
+            data["input"]["loc"] = locify(node.location)
         elif node.type == "GROUP_OUTPUT":
-            data["output"]["loc"] = list(node.location)
+            data["output"]["loc"] = locify(node.location)
         else:
-            nodes_table[node.type+str(nodes_counter[node.type[10:]])] = node
-            nodes_counter[node.type] += 1
+            nodes_table[node.bl_idname[10:]+str(nodes_counter[node.bl_idname[10:]])] = node
+            nodes_counter[node.bl_idname[10:]] += 1
 
     data["input"]["inputs"] = []
     for input in node_group.inputs:
-        data["input"]["inputs"].append([input.name, input.name]) #input.name
+        data["input"]["inputs"].append(flowmap([input.bl_socket_idname[10:], input.name])) #input.name
     data["output"]["outputs"] = []
     for output in node_group.outputs:
-        data["output"]["outputs"].append([output.name, output.name])
+        data["output"]["outputs"].append(flowmap([output.bl_socket_idname[10:], output.name]))
     
     data["nodes"] = dict()
     for node in nodes_table:
+        #print(dir(nodes_table[node]))
+        #print(nodes_table[node].bl_idname)
         data["nodes"][node] = dict()
-        data["nodes"][node]["loc"] = list(nodes_table[node].location)
-        data["nodes"][node]["type"] = nodes_table[node].name#[10:]
+        data["nodes"][node]["type"] = nodes_table[node].bl_idname[10:]
+        data["nodes"][node]["loc"] = locify(nodes_table[node].location)
         '''
         special_attributes = [attribute for attribute in dir(nodes_table[node]) if attribute not in dir(bpy.types.ShaderNode)] #TODO: Only save special attributes that differ from their default values.
         for attribute in special_attributes:
@@ -93,5 +108,5 @@ def save_node_group(name, desc, node_group):
     '''
 
     with open("nodes/"+name+".yaml", "w") as open_file:
-        print(data)
-        yaml.safe_dump(data, open_file)
+        #print(data)
+        yaml.dump(data, open_file, sort_keys=False)
