@@ -20,3 +20,5 @@ nodes:
 links:
 - [Group0, 0, BsdfPrincipled0, 7]
 - [BsdfPrincipled0, 0, output, 0]
+options:
+  Color: [BsdfPrincipled0, 0]

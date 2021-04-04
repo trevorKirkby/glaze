@@ -25,3 +25,5 @@ links:
 - [Group0, 0, Group1, 0]
 - [Group1, 0, BsdfPrincipled0, 0]
 - [BsdfPrincipled0, 0, output, 0]
+options:
+  Color: [Group0, 0]

@@ -11,14 +11,14 @@ from . flowmap import flowmap, serialize
 
 #TODO:
 #   -Load preset materials from YAML. [DONE]
-#   -Save preset materials to YAML.
-#   -Modifiable basic material parameters in the viewport menu. Options are part of YAML file. [MILESTONE]
+#   -Save preset materials to YAML. [DONE]
+#   -Modifiable basic material parameters in the viewport menu. Options are part of YAML file. [MILESTONE] [DONE]
 
 #TODO:
 #   -Automatic basic unwrappping button from viewport. [MILESTONE] [DONE]
 
 #TODO:
-#   -Make some neat node groups and materials preset. [BONUS MILESTONE]
+#   -Use the above to make a decent number of neat node groups and materials preset. [BONUS MILESTONE]
 
 #TODO (after milestone):
 #   -Utility to import/export YAML files into glaze library, handling bad files gracefully.

@@ -43,7 +43,10 @@ def load_material(source_file):
     options = dict()
     if "options" in data.keys():
         for name, value in data["options"].items():
-            options["name"] = nodes[value[0]].inputs[value[1]]
+            options[name] = nodes[value[0]].inputs[value[1]]
+            #options["name"] = nodes[value[0]].inputs[value[1]]
+            #options["name"] = nodes[value[0]]
+            #options["name"] = [nodes[value[0]], nodes[value[0]].inputs[value[1]].name]
 
     #postprocess is something unique to materials and not node groups
     postprocess = dict()

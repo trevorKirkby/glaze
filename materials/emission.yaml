@@ -11,5 +11,5 @@ nodes:
 links:
 - [Emission0, 0, output, 0]
 options:
-  Brightness: [Emission0, 1]
+  Strength: [Emission0, 1]
   Color: [Emission0, 0]
