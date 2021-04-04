@@ -1,0 +1,17 @@
+name: Fog
+desc: a volumetric fog material that makes mesh display as wireframe
+output:
+  loc: [300, 0]
+nodes:
+  VolumePrincipled0:
+    type: VolumePrincipled
+    loc: [0, 0]
+    defaults:
+    - [2, 0.5]
+links:
+- [VolumePrincipled0, 0, output, 1]
+options:
+  Density: [VolumePrincipled0, 2]
+  Color: [VolumePrincipled0, 0]
+postprocess:
+  wire: true

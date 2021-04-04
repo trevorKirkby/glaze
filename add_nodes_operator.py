@@ -1,5 +1,5 @@
 import bpy
-from . node_group import load_node_group
+from . lookup_node_group import lookup_node_group
 
 class AddNodeOperator(bpy.types.Operator):
     bl_idname = "node.add_node_operator"
@@ -12,7 +12,7 @@ class AddNodeOperator(bpy.types.Operator):
 
     def execute(self, context):
         options = context.scene.glaze_props
-        node_group = load_node_group("nodes/"+options.node_type.lower())
+        node_group = lookup_node_group(options.node_type.lower())
         material = context.active_object.active_material
         node = material.node_tree.nodes.new("ShaderNodeGroup")
         node.node_tree = bpy.data.node_groups[node_group.name]

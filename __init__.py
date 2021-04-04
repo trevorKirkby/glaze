@@ -21,6 +21,7 @@ from . add_nodes_operator import AddNodeOperator
 from . save_nodes_operator import SaveNodeOperator
 from . shading_ui import NodeMenu, ShadingPanel
 
+from .save_material_operator import SaveMaterialOperator
 from . set_materials_operator import SetMaterialOperator
 from . viewport_ui import ViewportPanel
 
@@ -35,7 +36,7 @@ bl_info = {
     "category" : "Generic"
 }
 
-classes = (GlazeProperties, UnwrapOperator, AddNodeOperator, SaveNodeOperator, NodeMenu, ShadingPanel, SetMaterialOperator, ViewportPanel)
+classes = (GlazeProperties, UnwrapOperator, AddNodeOperator, SaveNodeOperator, NodeMenu, ShadingPanel, SaveMaterialOperator, SetMaterialOperator, ViewportPanel)
 
 def register():
     for bpy_class in classes:

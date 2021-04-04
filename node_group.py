@@ -1,36 +1,30 @@
 import bpy
 import yaml
 import collections
+from . flowmap import flowmap, serialize
 
 #TODO:
 #   -Default values for node group inputs/outputs [DONE]
 #   -Parameters for internal nodes of node groups [DONE]
 #   -Serialize links correctly                    [DONE]
-#   -Utility to import/export YAML files into glaze library
-#   -Better handling of a bad YAML file that may have been imported or altered
-#   -Node group folders? Ways to organize many node groups
-#   -Make adding the same group twice not create duplicate group definitions
+#   -Make adding the same group twice not create duplicate group definitions. [DONE]
 
 #TODO:
-#   -Serialized preset materials.
-#       -Including keeping track of node locations so editing from the node menu does not look horrible.
-#   -Way to save, export, and import materials as well as node groups
-#   -Modifiable basic material parameters in the viewport menu... Include these optional parameters as something in the YAML file?
+#   -Load preset materials from YAML. [DONE]
+#   -Save preset materials to YAML.
+#   -Modifiable basic material parameters in the viewport menu. Options are part of YAML file. [MILESTONE]
 
 #TODO:
-#   -Automatic basic unwrappping button from viewport.
-#       -Barebones: Mark all edges as seams, automatically unwrap, and pack all islands. Maybe with the ability to preserve vertical or horizontal orientation as a setting.
+#   -Automatic basic unwrappping button from viewport. [MILESTONE] [DONE]
 
 #TODO:
-#   -Make some neat node groups and materials preset
+#   -Make some neat node groups and materials preset. [BONUS MILESTONE]
 
-class flowmap(list): pass #A hack to make YAML representation more human-friendly, credit to https://stackoverflow.com/questions/14000893/specifying-styles-for-portions-of-a-pyyaml-dump
-def flowmap_rep(dumper, data):
-    return dumper.represent_sequence(u"tag:yaml.org,2002:seq", data, flow_style=True)
-yaml.add_representer(flowmap, flowmap_rep)
-
-def serialize(pair):
-    return flowmap([int(coord) for coord in list(pair)])
+#TODO (after milestone):
+#   -Utility to import/export YAML files into glaze library, handling bad files gracefully.
+#   -Node group and material folders? Ways to organize many node groups and materials loaded. Might as well just use actual folders on the system.
+#   -Refactor and tidy things up. Maybe make a singular YAML representer for all "node tree" objects in Blender?
+#   -Tidy up and expand the interface. Material selections show material previews, et cetera.
 
 def load_node_group(source_file):
     with open(source_file, "r") as open_file:
@@ -77,7 +71,6 @@ def save_node_group(name, desc, node_group):
     temporary_group = bpy.data.node_groups.new("Temporary", "ShaderNodeTree")
 
     nodes_table = dict()
-    input_output_table = dict()
     nodes_counter = collections.Counter()
     for node in node_group.nodes:
         if node.type == "GROUP_INPUT":

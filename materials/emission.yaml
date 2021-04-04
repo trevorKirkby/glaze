@@ -1,0 +1,15 @@
+name: Emission
+desc: a moderately bright white light emission shader
+output:
+  loc: [300, 0]
+nodes:
+  Emission0:
+    type: Emission
+    loc: [0, 0]
+    defaults:
+    - [1, 5]
+links:
+- [Emission0, 0, output, 0]
+options:
+  Brightness: [Emission0, 1]
+  Color: [Emission0, 0]

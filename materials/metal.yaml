@@ -1,0 +1,22 @@
+name: Metal
+desc: basic metallic texture
+output:
+  loc: [300, 0]
+nodes:
+  BsdfPrincipled0:
+    type: BsdfPrincipled
+    loc: [0, 0]
+    select: false
+    defaults:
+    - [4, 1]
+  Group0:
+    type: NodeGroup_texturize
+    loc: [-300, 0]
+    select: false
+    defaults:
+    - [0, [1.0, 1.0, 1.0, 1.0]]
+    - [1, 70]
+    - [2, 1]
+links:
+- [Group0, 0, BsdfPrincipled0, 7]
+- [BsdfPrincipled0, 0, output, 0]

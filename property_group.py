@@ -19,6 +19,12 @@ for node in listdir("nodes"):
         data = yaml.safe_load(infile)
     node_types.append((node, data["name"], data["desc"]))
 
+material_types = []
+for material in listdir("materials"):
+    with open("materials/"+material, "r") as infile:
+        data = yaml.safe_load(infile)
+    material_types.append((material, data["name"], data["desc"]))
+
 class GlazeProperties(bpy.types.PropertyGroup):
     node_type : bpy.props.EnumProperty(
         name="Nodes",
@@ -28,10 +34,5 @@ class GlazeProperties(bpy.types.PropertyGroup):
     material_type : bpy.props.EnumProperty(
         name="Materials",
         description="choose a material to apply",
-        items=[
-            ("EMISSION", "Emission", ""),
-            ("FOG", "Fog", ""),
-            ("SOIL", "Soil", ""),
-            ("METAL", "Metal", ""),
-        ]
+        items=material_types,
     )

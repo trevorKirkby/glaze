@@ -11,4 +11,6 @@ class ViewportPanel(bpy.types.Panel):
         layout = self.layout
         layout.prop(context.scene.glaze_props, "material_type", text="") 
         layout.operator("view3d.set_material", text = "Set Material")
+        layout.operator("view3d.save_material", text = "Save Material to Library")
+        layout.row().separator()
         layout.operator("view3d.quick_unwrap", text = "Quick Unwrap")

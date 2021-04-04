@@ -1,0 +1,27 @@
+name: Soil
+desc: basic dirt texture
+output:
+  loc: [300, 0]
+nodes:
+  BsdfPrincipled0:
+    type: BsdfPrincipled
+    loc: [0, 0]
+    defaults:
+    - [7, 1]
+  Group0:
+    type: NodeGroup_texturize
+    loc: [-600, 0]
+    defaults:
+    - [0, [0.15312349796295166, 0.08625266700983047, 0.04008690267801285, 1.0]]
+    - [1, 7]
+    - [2, 1]
+  Group1:
+    type: NodeGroup_texturize
+    loc: [-300, 0]
+    defaults:
+    - [1, 30]
+    - [2, 0.9]
+links:
+- [Group0, 0, Group1, 0]
+- [Group1, 0, BsdfPrincipled0, 0]
+- [BsdfPrincipled0, 0, output, 0]
