@@ -1,0 +1,103 @@
+name: Cast Metal
+desc: a metal texture that is less smooth
+output:
+  loc: [524.0072631835938, 288.0849304199219]
+nodes:
+  TexCoord0:
+    type: TexCoord
+    loc: [-923.1149291992188, 283.5536193847656]
+    select: false
+  TexNoise0:
+    type: TexNoise
+    loc: [-583.9920654296875, -105.15936279296875]
+    name: Noise Texture.001
+    select: false
+    defaults:
+    - [2, 5000]
+  MixRGB0:
+    type: MixRGB
+    loc: [-234.43722534179688, 11.038394927978516]
+    select: false
+  Displacement0:
+    type: Displacement
+    loc: [310.46832275390625, 139.4019775390625]
+    select: false
+    defaults:
+    - [2, 0.0010000000474974513]
+  VertexColor0:
+    type: VertexColor
+    loc: [-79.31523895263672, 98.91180419921875]
+    layer_name: Metal Texture Mask
+    select: false
+  TexNoise1:
+    type: TexNoise
+    loc: [-645.058349609375, 235.58177185058594]
+    name: Noise Texture
+    select: false
+    defaults:
+    - [2, 150]
+    - [3, 5]
+    - [5, 0.5]
+  VertexColor1:
+    type: VertexColor
+    loc: [-632.2068481445312, 728.9569091796875]
+    select: false
+  TexNoise2:
+    type: TexNoise
+    loc: [-693.0416259765625, 522.3296508789062]
+    select: false
+    defaults:
+    - [2, 25]
+    - [3, 10]
+    - [5, 1]
+  MixRGB1:
+    type: MixRGB
+    loc: [-410.42352294921875, 564.3621215820312]
+    name: Mix.002
+    select: false
+    width: 144.7069091796875
+    defaults:
+    - [2, [0.6400087475776672, 0.6400087475776672, 0.6400087475776672, 1.0]]
+  MixRGB2:
+    type: MixRGB
+    loc: [112.7248306274414, 52.44480895996094]
+    name: Mix.001
+    select: false
+    defaults:
+    - [2, [1.0, 1.0, 1.0, 1.0]]
+  BsdfPrincipled0:
+    type: BsdfPrincipled
+    loc: [-114.4902114868164, 739.021728515625]
+    select: false
+    defaults:
+    - [0, [0.5028864741325378, 0.2894172668457031, 0.16907721757888794, 1.0]]
+    - [4, 1]
+    - [7, 0.800000011920929]
+    - [13, 0]
+  MixRGB3:
+    type: MixRGB
+    loc: [-353.79888916015625, 955.1708984375]
+    select: false
+    defaults:
+    - [1, [0.49999991059303284, 0.3184242248535156, 0.16466200351715088, 1.0]]
+    - [2, [0.9385860562324524, 0.647441029548645, 0.39035773277282715, 1.0]]
+links:
+- [BsdfPrincipled0, 0, output, 0]
+- [Displacement0, 0, output, 2]
+- [TexCoord0, 3, TexNoise1, 0]
+- [TexCoord0, 3, TexNoise0, 0]
+- [TexNoise0, 0, MixRGB0, 2]
+- [TexNoise1, 0, MixRGB0, 1]
+- [MixRGB0, 0, MixRGB2, 1]
+- [MixRGB2, 0, Displacement0, 0]
+- [VertexColor0, 0, MixRGB2, 0]
+- [VertexColor1, 0, MixRGB1, 0]
+- [TexNoise1, 0, MixRGB1, 1]
+- [MixRGB1, 0, BsdfPrincipled0, 7]
+- [TexCoord0, 3, TexNoise2, 0]
+- [TexNoise2, 0, MixRGB1, 2]
+- [VertexColor1, 0, MixRGB3, 0]
+- [MixRGB3, 0, BsdfPrincipled0, 0]
+options:
+  First Color: [MixRGB3, 1]
+  Second Color: [MixRGB3, 2]

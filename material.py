@@ -96,6 +96,7 @@ def save_material(name, desc, material):
         special_attributes = [attribute for attribute in dir(nodes_table[node]) if nodes_table[node].__getattribute__(attribute) != temporary_node.__getattribute__(attribute)]
         for attribute in special_attributes:
             if attribute == "defaults": continue #Handled more comprehensively later on.
+            if attribute == "select": continue
             if callable(nodes_table[node].__getattribute__(attribute)): continue
             try:
                 yaml.safe_dump(nodes_table[node].__getattribute__(attribute))

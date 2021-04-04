@@ -1,4 +1,4 @@
-name: Metal
+name: Smooth Metal
 desc: basic metallic texture
 output:
   loc: [300, 0]

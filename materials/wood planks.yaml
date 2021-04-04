@@ -1,0 +1,279 @@
+name: Wood Planks
+desc: procedural wood planks
+output:
+  loc: [537.1492919921875, 300]
+nodes:
+  '0':
+    type: ''
+    loc: [-687.4808959960938, -25.679588317871094]
+    height: 409.3773193359375
+    name: Frame.001
+    select: false
+    width: 906.1350708007812
+  '1':
+    type: ''
+    loc: [-355.6551513671875, 124.24842834472656]
+    height: 307.56585693359375
+    name: Frame.003
+    select: false
+    width: 529.191650390625
+  '2':
+    type: ''
+    loc: [-492.24090576171875, -785.614013671875]
+    height: 407.5691223144531
+    select: false
+    width: 901.3598022460938
+  '3':
+    type: ''
+    loc: [-1559.046142578125, -169.19186401367188]
+    height: 410.99127197265625
+    name: Frame.004
+    select: false
+    width: 901.35986328125
+  '4':
+    type: ''
+    loc: [-777.1025390625, 598.146240234375]
+    height: 561.9993896484375
+    name: Frame
+    select: false
+    width: 2793.97607421875
+  BsdfPrincipled0:
+    type: BsdfPrincipled
+    loc: [197.47979736328125, 301.2439270019531]
+    select: false
+    defaults:
+    - [5, 0]
+    - [7, 0.8500000238418579]
+  MixRGB0:
+    type: MixRGB
+    loc: [-701.5195922851562, 780.2714233398438]
+    blend_type: MULTIPLY
+    name: Mix.001
+    select: false
+    defaults:
+    - [0, 0.15000000596046448]
+  Mapping0:
+    type: Mapping
+    loc: [-837.5816650390625, 176.05691528320312]
+    name: Mapping.001
+    select: false
+    width: 240.0
+    defaults:
+    - [3, [1.5, 1.0, 1.0]]
+  TexCoord0:
+    type: TexCoord
+    loc: [-1004.634033203125, 151.19845581054688]
+    name: Texture Coordinate.001
+    select: false
+  TexWave0:
+    type: TexWave
+    loc: [-575.2362060546875, 150.20028686523438]
+    name: Wave Texture.001
+    rings_direction: SPHERICAL
+    select: false
+    wave_profile: SAW
+    defaults:
+    - [1, 6]
+    - [2, 0.3499999940395355]
+  MixRGB1:
+    type: MixRGB
+    loc: [-747.8247680664062, -264.5228271484375]
+    blend_type: MULTIPLY
+    name: Mix
+    select: false
+    defaults:
+    - [0, 1]
+  TexMusgrave0:
+    type: TexMusgrave
+    loc: [-234.85552978515625, 11.883499145507812]
+    select: false
+    defaults:
+    - [2, 65]
+  ValToRGB0:
+    type: ValToRGB
+    loc: [-5.663909912109375, 42.71745300292969]
+    name: ColorRamp.003
+    select: false
+  TexCoord1:
+    type: TexCoord
+    loc: [-1203.0994873046875, 394.3246154785156]
+    name: Texture Coordinate.002
+    select: false
+  Mapping1:
+    type: Mapping
+    loc: [-1036.0469970703125, 419.1831359863281]
+    name: Mapping.002
+    select: false
+    width: 240.0
+    defaults:
+    - [3, [1.5, 1.0, 1.0]]
+  TexWave1:
+    type: TexWave
+    loc: [-773.7015380859375, 393.3264465332031]
+    name: Wave Texture.002
+    rings_direction: SPHERICAL
+    select: false
+    wave_profile: TRI
+    defaults:
+    - [1, 365]
+    - [2, 8]
+    - [3, 10]
+    - [4, 10]
+  TexCoord2:
+    type: TexCoord
+    loc: [-1203.099365234375, 394.3246154785156]
+    name: Texture Coordinate.003
+    select: false
+  ValToRGB1:
+    type: ValToRGB
+    loc: [-601.7395629882812, 375.6102600097656]
+    name: ColorRamp.005
+    select: false
+  TexWave2:
+    type: TexWave
+    loc: [-773.7014770507812, 393.3264465332031]
+    name: Wave Texture.003
+    rings_direction: SPHERICAL
+    select: false
+    wave_profile: TRI
+    defaults:
+    - [1, 400]
+    - [2, 4]
+    - [3, 10]
+    - [4, 10]
+  Mapping2:
+    type: Mapping
+    loc: [-1036.046875, 419.1831359863281]
+    name: Mapping.003
+    select: false
+    width: 240.0
+    defaults:
+    - [3, [1.5, 1.0, 1.0]]
+  ValToRGB2:
+    type: ValToRGB
+    loc: [-398.49896240234375, 130.09234619140625]
+    name: ColorRamp.001
+    select: false
+  ValToRGB3:
+    type: ValToRGB
+    loc: [-601.739501953125, 375.6102600097656]
+    name: ColorRamp.002
+    select: false
+  ValToRGB4:
+    type: ValToRGB
+    loc: [-260.9893798828125, 185.40777587890625]
+    name: ColorRamp
+    select: false
+  MixRGB2:
+    type: MixRGB
+    loc: [836.3976440429688, 119.5045166015625]
+    blend_type: MULTIPLY
+    name: Mix.004
+    select: false
+    defaults:
+    - [0, 1]
+  Mapping3:
+    type: Mapping
+    loc: [-745.305908203125, 234.438720703125]
+    name: Mapping
+    select: false
+    width: 240.0
+    defaults:
+    - [3, [8.0, 2.0, 2.0]]
+  TexNoise0:
+    type: TexNoise
+    loc: [350.79443359375, 359.8531494140625]
+    name: Noise Texture.001
+    noise_dimensions: 4D
+    select: false
+    defaults:
+    - [2, 38]
+    - [3, 0.5]
+    - [4, 1]
+  ValToRGB5:
+    type: ValToRGB
+    loc: [529.5771484375, 329.116943359375]
+    name: ColorRamp.006
+    select: false
+  TexNoise1:
+    type: TexNoise
+    loc: [-1757.578369140625, 100.7962646484375]
+    name: Noise Texture
+    noise_dimensions: 4D
+    select: false
+    defaults:
+    - [2, 38]
+    - [3, 0.5]
+    - [4, 1]
+  ValToRGB6:
+    type: ValToRGB
+    loc: [-1578.795654296875, 70.06005859375]
+    name: ColorRamp.004
+    select: false
+  TexCoord3:
+    type: TexCoord
+    loc: [-1589.183837890625, 320.50250244140625]
+    name: Texture Coordinate
+    select: false
+  MixRGB3:
+    type: MixRGB
+    loc: [-1253.0859375, 238.1524658203125]
+    blend_type: ADD
+    name: Mix.002
+    select: false
+    defaults:
+    - [0, 1]
+  MixRGB4:
+    type: MixRGB
+    loc: [-1011.0758666992188, 181.97601318359375]
+    blend_type: ADD
+    name: Mix.003
+    select: false
+    defaults:
+    - [0, 1]
+  TexWave3:
+    type: TexWave
+    loc: [-482.9603271484375, 208.58209228515625]
+    name: Wave Texture
+    rings_direction: SPHERICAL
+    select: false
+    show_texture: true
+    wave_profile: TRI
+    wave_type: RINGS
+    defaults:
+    - [1, 15]
+    - [2, 11.5]
+    - [3, 12]
+    - [4, 0.4399999976158142]
+    - [5, 0.6299999952316284]
+    - [6, 0.5]
+links:
+- [BsdfPrincipled0, 0, output, 0]
+- [Mapping3, 0, TexWave3, 0]
+- [TexCoord0, 2, Mapping0, 0]
+- [Mapping0, 0, TexWave0, 0]
+- [TexWave0, 0, ValToRGB2, 0]
+- [TexCoord1, 2, Mapping1, 0]
+- [Mapping1, 0, TexWave1, 0]
+- [TexWave1, 0, ValToRGB3, 0]
+- [ValToRGB2, 0, MixRGB1, 2]
+- [ValToRGB3, 0, MixRGB1, 1]
+- [ValToRGB2, 0, MixRGB0, 2]
+- [TexMusgrave0, 0, ValToRGB0, 0]
+- [ValToRGB0, 0, BsdfPrincipled0, 7]
+- [TexNoise1, 1, ValToRGB6, 0]
+- [MixRGB3, 0, MixRGB4, 1]
+- [ValToRGB6, 0, MixRGB3, 2]
+- [TexCoord3, 0, MixRGB3, 1]
+- [Mapping2, 0, TexWave2, 0]
+- [TexWave2, 0, ValToRGB1, 0]
+- [MixRGB4, 0, Mapping3, 0]
+- [ValToRGB1, 0, MixRGB4, 2]
+- [MixRGB0, 0, MixRGB2, 1]
+- [ValToRGB4, 0, MixRGB0, 1]
+- [TexWave3, 0, ValToRGB4, 0]
+- [MixRGB1, 0, BsdfPrincipled0, 19]
+- [TexNoise0, 1, ValToRGB5, 0]
+- [MixRGB2, 0, BsdfPrincipled0, 0]
+- [ValToRGB5, 0, MixRGB2, 2]
+- [TexCoord2, 2, Mapping2, 0]

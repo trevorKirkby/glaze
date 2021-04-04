@@ -12,7 +12,7 @@ class SaveMaterialOperator(bpy.types.Operator):
 
     @classmethod
     def poll(cls, context):
-        return bpy.context.active_object.active_material.use_nodes == True
+        return bpy.context.active_object.active_material and bpy.context.active_object.active_material.use_nodes == True
 
     def invoke(self, context, event):
         return context.window_manager.invoke_props_dialog(self)

@@ -1,0 +1,57 @@
+name: Fake Caustics
+desc: applies fake caustics to an inputted transparent material
+input:
+  loc: [-759.3311767578125, 0]
+  inputs:
+  - [Shader, Shader]
+output:
+  loc: [759.3311767578125, 0]
+  outputs:
+  - [Shader, Shader]
+nodes:
+  MixShader0:
+    type: MixShader
+    loc: [559.3311767578125, -110.83407592773438]
+    select: false
+  BsdfTransparent0:
+    type: BsdfTransparent
+    loc: [303.08489990234375, -105.98880004882812]
+    select: false
+  LightPath0:
+    type: LightPath
+    loc: [95.79203796386719, 110.8341064453125]
+    select: false
+  MixRGB0:
+    type: MixRGB
+    loc: [311.0902404785156, 110.42156982421875]
+    blend_type: MULTIPLY
+    select: false
+    defaults:
+    - [0, 1]
+  NewGeometry0:
+    type: NewGeometry
+    loc: [-559.3311767578125, -62.708892822265625]
+    select: false
+  ValToRGB0:
+    type: ValToRGB
+    loc: [-189.02511596679688, 16.638580322265625]
+    select: false
+  Normal0:
+    type: Normal
+    loc: [-391.4139099121094, -49.93798828125]
+    select: false
+    defaults:
+    - [0, [0, 0, -1]]
+  VectorMath0:
+    type: VectorMath
+    loc: [-373.6878356933594, -249.1976318359375]
+    select: false
+links:
+- [NewGeometry0, 1, Normal0, 0]
+- [MixShader0, 0, output, 0]
+- [LightPath0, 1, MixRGB0, 1]
+- [input, 0, MixShader0, 1]
+- [BsdfTransparent0, 0, MixShader0, 2]
+- [MixRGB0, 0, MixShader0, 0]
+- [ValToRGB0, 0, MixRGB0, 2]
+- [Normal0, 1, ValToRGB0, 0]

@@ -1,0 +1,136 @@
+name: Prismatic
+desc: prismatic scattering behavior
+input:
+  loc: [-739.6729736328125, 0]
+  inputs: []
+output:
+  loc: [739.6730346679688, 0]
+  outputs:
+  - [Shader, Shader]
+nodes:
+  MixShader0:
+    type: MixShader
+    loc: [297.27813720703125, 317.7352294921875]
+  MixShader1:
+    type: MixShader
+    loc: [539.6730346679688, 220.7705078125]
+    defaults:
+    - [0, 0.33000001311302185]
+  NewGeometry0:
+    type: NewGeometry
+    loc: [-474.7222900390625, -200.264892578125]
+    name: Geometry.001
+  Value0:
+    type: Value
+    loc: [-478.0821533203125, -555.6094360351562]
+    name: Value.004
+  MixRGB0:
+    type: MixRGB
+    loc: [-282.20379638671875, -849.6686401367188]
+    name: Mix.004
+    defaults:
+    - [0, 0]
+  BsdfRefraction0:
+    type: BsdfRefraction
+    loc: [-59.22625732421875, -594.7262573242188]
+    name: Refraction BSDF.002
+  MixRGB1:
+    type: MixRGB
+    loc: [-297.4813232421875, -494.80548095703125]
+    blend_type: COLOR
+    name: Mix.005
+    defaults:
+    - [0, 1]
+  BsdfRefraction1:
+    type: BsdfRefraction
+    loc: [-74.00469970703125, 727.76416015625]
+  MixRGB2:
+    type: MixRGB
+    loc: [-349.4879150390625, 879.8095703125]
+    blend_type: MULTIPLY
+    name: Mix.001
+    defaults:
+    - [0, 1]
+  Value1:
+    type: Value
+    loc: [-539.6729736328125, 958.677490234375]
+  RGB0:
+    type: RGB
+    loc: [-537.3817138671875, 866.85400390625]
+    name: RGB.001
+  MixRGB3:
+    type: MixRGB
+    loc: [-281.70416259765625, 690.228515625]
+    name: Mix.002
+    defaults:
+    - [0, 0]
+  Value2:
+    type: Value
+    loc: [-451.1239013671875, 670.312255859375]
+  Value3:
+    type: Value
+    loc: [-496.7755126953125, 202.80322265625]
+    name: Value
+  RGB1:
+    type: RGB
+    loc: [-492.7288818359375, 112.0413818359375]
+    name: RGB
+  MixRGB4:
+    type: MixRGB
+    loc: [-300.8973388671875, -91.2559814453125]
+    name: Mix.003
+    defaults:
+    - [0, 0]
+  Value4:
+    type: Value
+    loc: [-470.3170166015625, -111.17236328125]
+    name: Value.003
+  BsdfRefraction2:
+    type: BsdfRefraction
+    loc: [-77.91973876953125, 163.6864013671875]
+    name: Refraction BSDF
+  MixRGB5:
+    type: MixRGB
+    loc: [-316.1746826171875, 263.607177734375]
+    blend_type: COLOR
+    name: Mix
+    defaults:
+    - [0, 1]
+  NewGeometry1:
+    type: NewGeometry
+    loc: [-456.0289306640625, -958.6775512695312]
+    name: Geometry.002
+  Value5:
+    type: Value
+    loc: [-451.6236572265625, -869.5850219726562]
+  RGB2:
+    type: RGB
+    loc: [-474.0352783203125, -646.3712768554688]
+  NewGeometry2:
+    type: NewGeometry
+    loc: [-455.5294189453125, 581.2197265625]
+    name: Geometry
+links:
+- [RGB1, 0, MixRGB5, 2]
+- [Value3, 0, MixRGB5, 1]
+- [MixRGB5, 0, BsdfRefraction2, 0]
+- [RGB0, 0, MixRGB2, 2]
+- [Value1, 0, MixRGB2, 1]
+- [MixRGB2, 0, BsdfRefraction1, 0]
+- [BsdfRefraction2, 0, MixShader0, 2]
+- [BsdfRefraction1, 0, MixShader0, 1]
+- [NewGeometry2, 1, MixRGB3, 1]
+- [MixRGB3, 0, BsdfRefraction1, 3]
+- [Value2, 0, MixRGB3, 0]
+- [NewGeometry0, 1, MixRGB4, 1]
+- [Value4, 0, MixRGB4, 0]
+- [MixRGB4, 0, BsdfRefraction2, 3]
+- [RGB2, 0, MixRGB1, 2]
+- [Value0, 0, MixRGB1, 1]
+- [MixRGB1, 0, BsdfRefraction0, 0]
+- [NewGeometry1, 1, MixRGB0, 1]
+- [Value5, 0, MixRGB0, 0]
+- [MixRGB0, 0, BsdfRefraction0, 3]
+- [BsdfRefraction0, 0, MixShader1, 2]
+- [MixShader0, 0, MixShader1, 1]
+- [MixShader1, 0, output, 0]

@@ -1,0 +1,45 @@
+name: Marble
+desc: smooth carrara marble texture
+output:
+  loc: [300, 300]
+nodes:
+  BsdfPrincipled0:
+    type: BsdfPrincipled
+    loc: [10, 300]
+    select: false
+  TexNoise0:
+    type: TexNoise
+    loc: [-702.6575317382812, 262.8316955566406]
+    select: false
+    defaults:
+    - [2, 4.199999809265137]
+  TexNoise1:
+    type: TexNoise
+    loc: [-776.7833251953125, -150.48619079589844]
+    select: false
+    show_texture: true
+    defaults:
+    - [2, 4.5]
+  ValToRGB0:
+    type: ValToRGB
+    loc: [-461.2312927246094, 20.597291946411133]
+    name: ColorRamp.001
+    select: false
+  ValToRGB1:
+    type: ValToRGB
+    loc: [-446.2561340332031, 317.8234558105469]
+    name: ColorRamp
+    select: false
+  MixRGB0:
+    type: MixRGB
+    loc: [-172.26156616210938, 208.71334838867188]
+    blend_type: SCREEN
+    defaults:
+    - [0, 0.30000001192092896]
+links:
+- [BsdfPrincipled0, 0, output, 0]
+- [TexNoise0, 1, ValToRGB1, 0]
+- [MixRGB0, 0, BsdfPrincipled0, 0]
+- [ValToRGB0, 0, MixRGB0, 2]
+- [ValToRGB1, 0, MixRGB0, 1]
+- [TexNoise1, 0, ValToRGB0, 0]

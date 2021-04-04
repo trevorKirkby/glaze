@@ -1,0 +1,65 @@
+name: Water
+desc: water material with volumetrics and fake caustics
+output:
+  loc: [563.9561157226562, 353.26983642578125]
+nodes:
+  MixShader0:
+    type: MixShader
+    loc: [310.9500732421875, 372.7168273925781]
+    select: false
+  BsdfPrincipled0:
+    type: BsdfPrincipled
+    loc: [0.8316507339477539, 255.91464233398438]
+    select: false
+    defaults:
+    - [0, [0.48198696970939636, 0.6343194246292114, 0.8000000715255737, 1.0]]
+    - [5, 1]
+    - [7, 0]
+    - [15, 1]
+  BsdfTransparent0:
+    type: BsdfTransparent
+    loc: [54.703765869140625, 377.5621032714844]
+    select: false
+    defaults:
+    - [0, [1.607699990272522, 1.6499106884002686, 2.5371551513671875, 1.0]]
+  LightPath0:
+    type: LightPath
+    loc: [-152.58909606933594, 594.385009765625]
+    select: false
+  Normal0:
+    type: Normal
+    loc: [-482.0994873046875, 444.6342468261719]
+    select: false
+    defaults:
+    - [0, [0, 0, -1]]
+  NewGeometry0:
+    type: NewGeometry
+    loc: [-650.0167846679688, 431.86334228515625]
+    select: false
+  MixRGB0:
+    type: MixRGB
+    loc: [62.70911407470703, 593.9724731445312]
+    blend_type: MULTIPLY
+    select: false
+    defaults:
+    - [0, 1]
+  ValToRGB0:
+    type: ValToRGB
+    loc: [-279.710693359375, 511.2108154296875]
+    select: false
+  VolumePrincipled0:
+    type: VolumePrincipled
+    loc: [298.0873718261719, 232.28915405273438]
+    select: false
+    defaults:
+    - [0, [0.46070224046707153, 0.49027150869369507, 0.5854930281639099, 1.0]]
+links:
+- [NewGeometry0, 1, Normal0, 0]
+- [Normal0, 1, ValToRGB0, 0]
+- [MixShader0, 0, output, 0]
+- [LightPath0, 1, MixRGB0, 1]
+- [BsdfPrincipled0, 0, MixShader0, 1]
+- [BsdfTransparent0, 0, MixShader0, 2]
+- [MixRGB0, 0, MixShader0, 0]
+- [ValToRGB0, 0, MixRGB0, 2]
+- [VolumePrincipled0, 0, output, 1]

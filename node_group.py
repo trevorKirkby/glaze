@@ -18,13 +18,14 @@ from . flowmap import flowmap, serialize
 #   -Automatic basic unwrappping button from viewport. [MILESTONE] [DONE]
 
 #TODO:
-#   -Use the above to make a decent number of neat node groups and materials preset. [BONUS MILESTONE]
+#   -Use the above to make a decent number of neat node groups and materials preset. [BONUS MILESTONE] [SEMI-DONE]
 
 #TODO (after milestone):
 #   -Utility to import/export YAML files into glaze library, handling bad files gracefully.
 #   -Node group and material folders? Ways to organize many node groups and materials loaded. Might as well just use actual folders on the system.
 #   -Refactor and tidy things up. Maybe make a singular YAML representer for all "node tree" objects in Blender?
 #   -Tidy up and expand the interface. Material selections show material previews, et cetera.
+#   -Rethink using materials lookup. Maybe each object SHOULD get distinct instances of a material, unlike with node groups where there should only ever be a single instance.
 
 def load_node_group(source_file):
     with open(source_file, "r") as open_file:

@@ -1,0 +1,85 @@
+name: Patterned
+desc: interesting generated pattern texture
+output:
+  loc: [1067.0228271484375, 300]
+nodes:
+  Mapping0:
+    type: Mapping
+    loc: [-1196.7998046875, 246.93112182617188]
+    select: false
+    width: 240.0
+    defaults:
+    - [1, [-3.725290298461914e-09, 0.0, 0.0]]
+  TexVoronoi0:
+    type: TexVoronoi
+    loc: [-906.3509521484375, 243.92919921875]
+    distance: MINKOWSKI
+    select: false
+    defaults:
+    - [2, 3]
+    - [4, 2.200000047683716]
+    - [5, 0]
+  TexMusgrave0:
+    type: TexMusgrave
+    loc: [-715.9228515625, 270.5047302246094]
+    select: false
+  TexWave0:
+    type: TexWave
+    loc: [-499.71221923828125, 324.3762512207031]
+    select: false
+    show_texture: true
+    wave_profile: TRI
+    defaults:
+    - [1, 0.44999998807907104]
+  ValToRGB0:
+    type: ValToRGB
+    loc: [-269.71221923828125, 301.5875244140625]
+    select: false
+  TexCoord0:
+    type: TexCoord
+    loc: [-1427.281982421875, 344.10687255859375]
+    select: false
+  MixRGB0:
+    type: MixRGB
+    loc: [52.4127311706543, 552.7642822265625]
+    blend_type: COLOR
+    select: false
+    defaults:
+    - [0, 1]
+  Value0:
+    type: Value
+    loc: [-137.6671600341797, 499.5472106933594]
+    select: false
+  BsdfTransparent0:
+    type: BsdfTransparent
+    loc: [235.22607421875, 561.9159545898438]
+    select: false
+  MixShader0:
+    type: MixShader
+    loc: [839.59228515625, 349.0582275390625]
+    select: false
+  BsdfPrincipled0:
+    type: BsdfPrincipled
+    loc: [174.49932861328125, 136.19677734375]
+    select: false
+    defaults:
+    - [5, 0]
+    - [7, 1]
+  LightPath0:
+    type: LightPath
+    loc: [528.3400268554688, 810.585693359375]
+    select: false
+links:
+- [Mapping0, 0, TexVoronoi0, 0]
+- [TexVoronoi0, 0, TexMusgrave0, 0]
+- [TexWave0, 0, ValToRGB0, 0]
+- [TexMusgrave0, 0, TexWave0, 0]
+- [TexCoord0, 0, Mapping0, 0]
+- [ValToRGB0, 0, BsdfPrincipled0, 0]
+- [BsdfTransparent0, 0, MixShader0, 2]
+- [MixRGB0, 0, BsdfTransparent0, 0]
+- [Value0, 0, MixRGB0, 1]
+- [ValToRGB0, 0, MixRGB0, 2]
+- [MixShader0, 0, output, 0]
+- [LightPath0, 1, MixShader0, 0]
+- [BsdfPrincipled0, 0, MixShader0, 1]
